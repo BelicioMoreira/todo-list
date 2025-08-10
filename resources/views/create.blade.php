@@ -8,7 +8,9 @@
 
 <body class="bg-blue-200 flex justify-center items-center min-h-screen">
 <div class="bg-green-900 w-200 mx-auto rounded">
-
+        <form action="POST" action="/{{ $task->id }}">
+            @csrf
+            @method('PATCH')
         <div class="bg-amber-900 flex p-2 m-2">
             <input type="text" placeholder="titulo" id="input-todo" class="bg-amber-200 p-2 m-2 flex flex-grow rounded">
         </div>
@@ -19,7 +21,11 @@
 
         <div class="input-container bg-amber-900 p-2 m-2 text-center">
             <input type="date" placeholder="data" id="input-todo" class="bg-amber-200 m-1 p-2 rounded">
+
+        </form>
+
             <button id="add-todo" class="bg-blue-900 p-2 py-1 text-white font-bold rounded">+</button>
+
         </div>        
     </div>
 </body>

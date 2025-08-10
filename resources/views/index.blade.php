@@ -8,6 +8,7 @@
 
 <body class="bg-blue-200 flex justify-center items-center min-h-screen">
 <div class="bg-green-900 w-200 mx-auto rounded">
+    
 
         <div class="bg-amber-900 flex p-2 m-2">
             <input type="text" placeholder="buscador" id="input-todo" class="bg-amber-200 p-2 m-2 flex flex-grow rounded">
@@ -18,19 +19,19 @@
         <div class="bg-amber-900 min-h-80 p-2 m-2 overflow-auto max-h-80">
             <table class="bg-blue-300 w-full text-center">
                 <tr class="bg-amber-400 p-2 m-2">
-                    <th class="p-2">titulo</th>
-                    <th class="p-2">vencimento</th>
-                    <th class="p-2">status</th>
-                    <th class="p-2">acoes</th>
+                    <th class="p-2">Título</th>
+                    <th class="p-2">Vencimento</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Editar/Deletar</th>
                 </tr>
-
-                <tr class="bg-red-600">
-                    <td class="p-2">1</td>
-                    <td class="p-2">2</td>
-                    <td class="p-2">3</td>
-                    <td class="p-2">4</td>
-                </tr>
-            
+                @foreach ($tasks as $task)
+                    <tr class="bg-red-600">
+                        <td class="p-2">{{ $task->title }}</td>
+                        <td class="p-2">{{ $task->due_date }}</td>
+                        <td class="p-2">{{ $task->status }}</td>
+                        <td class="p-2"><a href="{{ route('deleteTask', ['task_id'=>$task->id]) }}"></a></td>
+                    </tr>
+                @endforeach            
             </table>
         </div>
 
