@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskResquest;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use GuzzleHttp\Promise\Create;
@@ -22,24 +23,29 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $tasks = new Task();
-        return view('todo.create', compact('tasks'));
+        return view('todo.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskResquest $request)
     {
         // dd($request);
-
-        $validation = $request->validate([
-            'title' => 'required',
-            'description' =>'nullable',
-            'due_date' => 'required'
+        $task = Task::create([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'due_date' => $request['due_date'],
         ]);
-        Task::create($validation);
-        return redirect()->route('todo.index');
+
+        if($task)
+        {
+            return redirect()->route('todo.index')->with('success', 'Tarefa cadastrada com sucessso!!');
+        }
+        else
+        {
+            return redirect()->route('todo.index')->with('error', 'Não foi possível cadastrar a tarefa!!');
+        }
 
     }
 
@@ -54,27 +60,46 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Task $task)
     {
-        //
+        return view('todo.update', compact('task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TaskResquest $request, Task $task)
     {
-        //
+        $update = $task->update([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'due_date' => $request['due_date'],
+        ]);
+
+        if($update)
+        {
+            return redirect()->route('todo.index')->with('success', 'Tarefa atualizada com sucessso!!');
+        }
+        else
+        {
+            return redirect()->route('todo.index')->with('error', 'Não foi possível atualizar a tarefa!!');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        $task = Task::where('id', $id)->first();
-        $task->delete();
+        $deleted = $task->delete();
 
-        return redirect()->back();
+        if($deleted)
+        {
+            return redirect()->route('todo.index')->with('success', 'Tarefa removida com sucessso!!');
+        }
+        else
+        {
+            return redirect()->route('todo.index')->with('error', 'Não foi possível remover a tarefa!!');
+        }
     }
 }

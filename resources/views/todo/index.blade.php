@@ -9,6 +9,17 @@
 <body class="bg-blue-200 flex justify-center items-center min-h-screen">
 <div class="bg-green-900 w-200 mx-auto rounded">
     
+        @if(@session('success'))        
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+            <p class="font-bold">Sucesso</p>
+            <p>{{ session('success') }}</p>
+            </div>
+        @elseif(@@session('error'))
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+            <p class="font-bold">Alerta</p>
+            <p>{{ session('error') }}</p>
+            </div>
+        @endif
 
         <div class="bg-amber-900 flex p-2 m-2">
             <input type="text" placeholder="buscador" id="input-todo" class="bg-amber-200 p-2 m-2 flex flex-grow rounded">
@@ -29,9 +40,14 @@
                         <td class="p-2">{{ $task->title }}</td>
                         <td class="p-2">{{ $task->due_date }}</td>
                         <td class="p-2">{{ $task->status }}</td>
-                        <td class="p-2">
-                            <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Green</button>
-                            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Red</button>
+                        <td class="p-2 d-flex justify-start gap-2">
+                            <a href=" {{ route('todo.edit', $task->id) }} " type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Editar</a>
+                        <form action="{{ route('todo.destroy', $task->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Excluir</button>
+                        </form>
+
                         </td>
                     </tr>
                 @endforeach            
