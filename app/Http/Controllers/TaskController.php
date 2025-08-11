@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use GuzzleHttp\Promise\Create;
 
 class TaskController extends Controller
 {
@@ -12,7 +13,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $tasks = Task::all();
+        return view('todo.index', compact('tasks'));
     }
 
     /**
@@ -20,7 +22,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $tasks = new Task();
+        return view('todo.create', compact('tasks'));
     }
 
     /**
@@ -28,7 +31,16 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+
+        $validation = $request->validate([
+            'title' => 'required',
+            'description' =>'nullable',
+            'due_date' => 'required'
+        ]);
+        Task::create($validation);
+        return redirect()->route('todo.index');
+
     }
 
     /**
