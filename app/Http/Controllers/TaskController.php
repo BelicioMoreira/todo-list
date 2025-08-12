@@ -6,6 +6,8 @@ use App\Http\Requests\TaskResquest;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Support\Facades\Redis;
 
 class TaskController extends Controller
 {
@@ -16,6 +18,19 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
         return view('todo.index', compact('tasks'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $tasks = Task::where(function($query) use ($search) {
+            $query->where('title', 'like', "%$search%")
+            ->orWhere('description', 'like', "%$search%");
+        })
+        ->get();
+
+        return view('todo.index', compact('tasks', 'search'));
     }
 
     /**

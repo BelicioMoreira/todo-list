@@ -22,9 +22,11 @@
         @endif
 
         <div class="bg-amber-900 flex p-2 m-2">
-            <input type="text" placeholder="buscador" id="input-todo" class="bg-amber-200 p-2 m-2 flex flex-grow rounded">
+            <form method="GET" action="/search">
+            <input type="text" name="search" placeholder="Buscar..." value="{{ isset($search) ? $search : '' }}" class="bg-amber-200 p-2 m-2 flex flex-grow rounded">
             <input type="text" placeholder="filtro" id="input-todo" class="bg-amber-200 p-2 m-2 rounded">
             <button id="add-todo" class="bg-blue-900 text-white m-2 p-2 font-bold rounded">Aplicar</button>
+            </form>
         </div>
 
         <div class="bg-amber-900 min-h-80 p-2 m-2 overflow-auto max-h-80">

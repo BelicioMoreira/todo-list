@@ -9,4 +9,5 @@ Route::post('/create',  [TaskController::class, 'store'])->name('todo.store');
 Route::get('/{task}/edit', [TaskController::class, 'edit'])->name('todo.edit');
 Route::put('/{task}/edit', [TaskController::class, 'update'])->name('todo.update');
 Route::delete('/{task}', [TaskController::class, 'destroy'])->name('todo.destroy');
+Route::get('/search', [TaskController::class, 'search'])->name('todo.index');
 
