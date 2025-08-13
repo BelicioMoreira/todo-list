@@ -104,10 +104,16 @@ class TaskController extends Controller
     public function markCompleted(Task $task)
     {
 
-        $task->is_completed="1";
+        if ($task->is_completed=="1") 
+        {   
+            $task->is_completed="0";
+        } else {
+            $task->is_completed="1";
+        }
+
         $task->update();
 
-        return redirect()->route('todo.index')->with('success', 'Tarefa concluída!!');
+        return redirect()->route('todo.index');        
     }
 
     /**
