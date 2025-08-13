@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('due_date');
-            $table->boolean('completed')->default(false);
+            $table->boolean('is_completed')->default(0);
             $table->timestamps();
         });
     }

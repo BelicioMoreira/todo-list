@@ -10,4 +10,5 @@ Route::get('/{task}/edit', [TaskController::class, 'edit'])->name('todo.edit');
 Route::put('/{task}/edit', [TaskController::class, 'update'])->name('todo.update');
 Route::delete('/{task}', [TaskController::class, 'destroy'])->name('todo.destroy');
 Route::get('/search', [TaskController::class, 'search'])->name('todo.index');
+Route::get('/{task}', [TaskController::class, 'markCompleted'])->name('todo.markcompleted');
 

@@ -101,6 +101,15 @@ class TaskController extends Controller
         }
     }
 
+    public function markCompleted(Task $task)
+    {
+
+        $task->is_completed="1";
+        $task->update();
+
+        return redirect()->route('todo.index')->with('success', 'Tarefa concluída!!');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

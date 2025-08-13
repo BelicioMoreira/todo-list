@@ -41,7 +41,13 @@
                     <tr>
                         <td class="p-2">{{ $task->title }}</td>
                         <td class="p-2">{{ $task->due_date }}</td>
-                        <td class="p-2">{{ $task->status }}</td>
+                        <td class="p-2">
+                            @if ($task->is_completed === 0)
+                            <a href="{{ route('todo.markcompleted', $task->id) }}">Marcar como concluída</a>
+                            @else
+                            <a href="{{ route('todo.markcompleted', $task->id) }}">Marcar como sem concluír</a>
+                            @endif
+                            {{ $task->status }}</td>
                         <td class="p-2 d-flex justify-start gap-2">
                             <a href=" {{ route('todo.edit', $task->id) }} " type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Editar</a>
                         <form action="{{ route('todo.destroy', $task->id) }}" method="POST" class="inline">
