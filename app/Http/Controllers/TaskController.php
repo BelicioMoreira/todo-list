@@ -18,6 +18,8 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
         return view('todo.index', compact('tasks'));
+        $sort = Task::orderBy('due_date', 'asc')->get();
+        $sort = Task::orderBy('due_date', 'desc')->get();
     }
 
     public function search(Request $request)
